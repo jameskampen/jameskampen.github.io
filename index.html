@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>James Kampen — Mechanical Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F7F7F5;
+      --surface:   #FFFFFF;
+      --ink:       #1A1A1A;
+      --mid:       #6B6B6B;
+      --rule:      #E2E2DE;
+      --accent:    #1A1A1A;
+      --tag-bg:    #EFEFEC;
+      --mono:      'DM Mono', monospace;
+      --sans:      'DM Sans', sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 56px;
+    }
+
+    .nav-name {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 7rem 2.5rem 5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--mid);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-contact {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-contact a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .hero-contact a:hover { border-color: var(--ink); }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--rule);
+      background: var(--surface);
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.25s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    .project-card.wide {
+      grid-template-columns: 1fr;
+    }
+
+    .card-image {
+      background: var(--tag-bg);
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--mid);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .placeholder-icon {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--rule);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .placeholder-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--mid);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-body {
+      padding: 2rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .card-meta {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin: 0.4rem 0 0.7rem;
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--mid);
+      line-height: 1.65;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      background: var(--tag-bg);
+      color: var(--ink);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .card-highlight {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ink);
+      border-left: 2px solid var(--ink);
+      padding-left: 0.75rem;
+      margin-top: 0.25rem;
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--mid);
+      letter-spacing: 0.06em;
+    }
+
+    footer a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--mid);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--ink); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .hero { padding: 4rem 1.25rem 3rem; }
+      .projects-section { padding: 3rem 1.25rem 4rem; }
+      .project-card { grid-template-columns: 1fr; }
+      .card-image { min-height: 200px; }
+      footer { padding: 2rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-name" href="#">James Kampen</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="mailto:your@email.com">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-eyebrow">Mechanical Designer · Cambridge, ON</p>
+    <h1>Automation equipment,<br><em>built to work.</em></h1>
+    <p class="hero-desc">
+      3+ years designing custom automation machinery, test systems, and precision mechanical hardware.
+      CSWP certified. BASc Mechanical Engineering, University of Waterloo.
+    </p>
+    <div class="hero-contact">
+      <a href="mailto:your@email.com">your@email.com</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+      <a href="JamesKampen_Resume.pdf" target="_blank">Resume PDF</a>
+    </div>
+  </header>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- PROJECTS -->
+  <main class="projects-section" id="projects">
+    <div class="section-header">
+      <span class="section-label">Selected Projects</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- Project 1: CNC Plasma Cutter -->
+    <article class="project-card">
+      <div class="card-image">
+        <!-- Replace with: <img src="images/plasma-cutter.jpg" alt="2-Axis CNC Plasma Cutter" /> -->
+        <div class="card-image-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          Add project photo
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-meta">Capstone Project · 2025</div>
+          <h2 class="card-title">2-Axis CNC Plasma Cutter</h2>
+          <p class="card-desc">
+            Led software and controller design for a fully functional 2-axis CNC plasma cutting system,
+            including motion control and G-code interpretation. Designed and built as a capstone project
+            at the University of Waterloo.
+          </p>
+          <div class="card-highlight">Role: Software &amp; Controller Design Lead</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Motion Control</span>
+          <span class="tag">G-code</span>
+          <span class="tag">CNC</span>
+          <span class="tag">Embedded Systems</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2: Vibration Test Fixture -->
+    <article class="project-card">
+      <div class="card-image">
+        <!-- Replace with: <img src="images/vibration-fixture.jpg" alt="Vibration Test Fixture" /> -->
+        <div class="card-image-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M2 12h4l3-9 4 18 3-9h4"/></svg>
+          </div>
+          Add project photo
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-meta">Christie Digital Systems · 2023</div>
+          <h2 class="card-title">1,000-lb Vibration Test Fixture</h2>
+          <p class="card-desc">
+            Designed a heavy-duty vibration test fixture for cinema projectors using iterative SolidWorks
+            frequency analysis. Achieved a natural frequency above 300 Hz to prevent resonance during
+            vibration qualification testing.
+          </p>
+          <div class="card-highlight">300 Hz natural frequency — resonance-free qualification</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">SolidWorks</span>
+          <span class="tag">FEA</span>
+          <span class="tag">Frequency Analysis</span>
+          <span class="tag">ASTM Testing</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 3: Automated Test System -->
+    <article class="project-card">
+      <div class="card-image">
+        <!-- Replace with: <img src="images/test-system.jpg" alt="Automated Pneumatic Test System" /> -->
+        <div class="card-image-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          Add project photo
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-meta">OtO Inc. · 2023</div>
+          <h2 class="card-title">Automated Pneumatic End-of-Line Test System</h2>
+          <p class="card-desc">
+            Developed an automated pneumatic quality testing system integrating pressure sensors, solenoid
+            valves, and a multi-threaded Python GUI for real-time pressure analysis. Reduced end-of-line
+            test cycle time by 80%.
+          </p>
+          <div class="card-highlight">80% reduction in test cycle time</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Pneumatics</span>
+          <span class="tag">Data Acquisition</span>
+          <span class="tag">Test Automation</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 4: Vacuum System -->
+    <article class="project-card">
+      <div class="card-image">
+        <!-- Replace with: <img src="images/vacuum-system.jpg" alt="Vacuum System" /> -->
+        <div class="card-image-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          </div>
+          Add project photo
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-meta">Christie Digital Systems · 2023</div>
+          <h2 class="card-title">Magnetically-Mounted Vacuum System</h2>
+          <p class="card-desc">
+            Designed and built a magnetically-mounted vacuum system with a potentiometer-tuned flow rate
+            for precise contamination removal from a test chamber, housed in a custom 3D-printed enclosure
+            with LED status indicators.
+          </p>
+          <div class="card-highlight">Potentiometer-tuned flow rate to meet contamination spec</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">3D Printing</span>
+          <span class="tag">Electronics</span>
+          <span class="tag">Mechanical Design</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 5: Bicycle Frame Test Machine -->
+    <article class="project-card">
+      <div class="card-image">
+        <!-- Replace with: <img src="images/bike-tester.jpg" alt="Bicycle Frame Durability Tester" /> -->
+        <div class="card-image-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          Add project photo
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-meta">Pearl Sullivan IDEAs Clinic · 2021</div>
+          <h2 class="card-title">Bicycle Frame Durability Test Machine</h2>
+          <p class="card-desc">
+            Designed and assembled a cyclic loading test machine for bicycle frames in accordance with
+            ASTM F2711, built as an engineering teaching tool using an aluminum extrusion frame,
+            linear actuator, and load cell.
+          </p>
+          <div class="card-highlight">ASTM F2711 compliant — built as a university teaching tool</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">ASTM F2711</span>
+          <span class="tag">Structural Design</span>
+          <span class="tag">Load Cell</span>
+          <span class="tag">Aluminum Extrusion</span>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>James Kampen · Mechanical Designer</span>
+    <a href="mailto:your@email.com">your@email.com</a>
+  </footer>
+
+</body>
+</html>
